@@ -6,4 +6,6 @@ data/processed/davis_test.pt
 data/processed/davis_train.pt
 data/processed/kiba_test.pt
 data/processed/kiba_train.pt
-
+filter_data.py
+supplement.pdf
+data/kiba/uniprot_data

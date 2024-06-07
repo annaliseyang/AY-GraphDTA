@@ -2,12 +2,13 @@ import os
 import numpy as np
 from math import sqrt
 from scipy import stats
-from torch_geometric.data import InMemoryDataset, DataLoader
+from torch_geometric.data import InMemoryDataset
+from torch_geometric.loader import DataLoader
 from torch_geometric import data as DATA
 import torch
 
 class TestbedDataset(InMemoryDataset):
-    def __init__(self, root='/tmp', dataset='davis', 
+    def __init__(self, root='/tmp', dataset='davis',
                  xd=None, xt=None, y=None, transform=None,
                  pre_transform=None,smile_graph=None):
 
@@ -53,7 +54,7 @@ class TestbedDataset(InMemoryDataset):
         data_list = []
         data_len = len(xd)
         for i in range(data_len):
-            print('Converting SMILES to graph: {}/{}'.format(i+1, data_len))
+            # print('Converting SMILES to graph: {}/{}'.format(i+1, data_len))
             smiles = xd[i]
             target = xt[i]
             labels = y[i]
