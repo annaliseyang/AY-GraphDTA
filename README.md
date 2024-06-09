@@ -1,3 +1,6 @@
+I'm working on implementing a graph representation of proteins, and addressing low data problems for new targets, based on the original GraphDTA model.
+Disclaimer: This project is still in development and may not produce reliable results for some structures!
+
 # Resources:
 
 + README.md: this file.
