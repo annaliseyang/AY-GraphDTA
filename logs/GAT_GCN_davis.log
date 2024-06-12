@@ -1,0 +1,110 @@
+000 (5281944.000.000) 2024-06-08 18:39:17 Job submitted from host: <155.37.253.48:9618?addrs=155.37.253.48-9618&alias=accesspoint.nmrbox.org&noUDP&sock=schedd_1883_28ec>
+...
+001 (5281944.000.000) 2024-06-08 18:39:36 Job executing on host: <155.37.253.80:9618?addrs=155.37.253.80-9618+[fde1-53ba-e9a0-de11-89d6-c4dc-72b4-6274]-9618&alias=compute-2.bmrb.io&noUDP&sock=startd_14120_b959>
+	SlotName: slot1_1@compute-2.bmrb.io
+	AvailableGPUs = { GPUs_GPU_2fa911c2 }
+	CondorScratchDir = "/var/lib/condor/execute/dir_75726"
+	Cpus = 40
+	Disk = 8438875
+	GPUs = 1
+	GPUs_GPU_2fa911c2 = [ GlobalMemoryMb = 81090; MaxSupportedVersion = 12010; DriverVersion = 12.1; DeviceUuid = "2fa911c2-c502-54dc-4db5-aad679bf69af"; DeviceName = "NVIDIA H100 PCIe"; CoresPerCU = 128; ECCEnabled = true; ComputeUnits = 114; ClockMhz = 1755.0; Id = "GPU-2fa911c2"; DevicePciBusId = "0000:25:00.0"; Capability = 9.0 ]
+	Memory = 262144
+...
+006 (5281944.000.000) 2024-06-08 18:39:45 Image size of job updated: 2631068
+	2570  -  MemoryUsage of job (MB)
+	2631068  -  ResidentSetSize of job (KB)
+...
+006 (5281944.000.000) 2024-06-08 18:44:46 Image size of job updated: 8859268
+	8652  -  MemoryUsage of job (MB)
+	8859268  -  ResidentSetSize of job (KB)
+...
+006 (5281944.000.000) 2024-06-08 21:45:02 Image size of job updated: 8862192
+	8655  -  MemoryUsage of job (MB)
+	8862192  -  ResidentSetSize of job (KB)
+...
+006 (5281944.000.000) 2024-06-08 21:55:04 Image size of job updated: 8862296
+	8655  -  MemoryUsage of job (MB)
+	8862296  -  ResidentSetSize of job (KB)
+...
+005 (5281944.000.000) 2024-06-08 23:23:06 Job terminated.
+	(1) Normal termination (return value 0)
+		Usr 0 04:42:03, Sys 0 00:01:15  -  Run Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Run Local Usage
+		Usr 0 04:42:03, Sys 0 00:01:15  -  Total Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Total Local Usage
+	0  -  Run Bytes Sent By Job
+	0  -  Run Bytes Received By Job
+	0  -  Total Bytes Sent By Job
+	0  -  Total Bytes Received By Job
+	Partitionable Resources :    Usage  Request Allocated Assigned
+	   Cpus                 :     1.00       40        40 
+	   Disk (KB)            :  7500     8388608   8438875 
+	   Gpus (Average)       :     0.05        1         1 "GPU-2fa911c2"
+	   GpusMemory (MB)      :  4827                       
+	   Memory (MB)          :  8655      262144    262144 
+	   TimeExecute (s)      : 17006                       
+	   TimeSlotBusy (s)     : 17008                       
+
+	Job terminated of its own accord at 2024-06-09T03:23:02Z with exit-code 0.
+...
+000 (5281961.000.000) 2024-06-09 18:05:48 Job submitted from host: <155.37.253.48:9618?addrs=155.37.253.48-9618&alias=accesspoint.nmrbox.org&noUDP&sock=schedd_1883_28ec>
+...
+001 (5281961.000.000) 2024-06-09 18:05:48 Job executing on host: <155.37.253.87:9618?addrs=155.37.253.87-9618+[fde1-53ba-e9a0-de11-3d94-6c9a-cb4b-6781]-9618&alias=babbage.nmrbox.org&noUDP&sock=startd_32529_c44e>
+	SlotName: slot1_3@babbage.nmrbox.org
+	AvailableGPUs = { GPUs_GPU_5cf19d22 }
+	CondorScratchDir = "/var/lib/condor/execute/dir_43339"
+	Cpus = 32
+	Disk = 8389632
+	GPUs = 1
+	GPUs_GPU_5cf19d22 = [ GlobalMemoryMb = 40377; MaxSupportedVersion = 12010; DriverVersion = 12.1; ComputeUnits = 108; ECCEnabled = true; DeviceUuid = "5cf19d22-e8bd-fab1-4f8a-5001504362e3"; DeviceName = "NVIDIA A100-SXM4-40GB"; CoresPerCU = 64; ClockMhz = 1410.0; DevicePciBusId = "0000:81:00.0"; Capability = 8.0; Id = "GPU-5cf19d22" ]
+	Memory = 262144
+...
+006 (5281961.000.000) 2024-06-09 18:05:57 Image size of job updated: 5643596
+	5512  -  MemoryUsage of job (MB)
+	5643596  -  ResidentSetSize of job (KB)
+...
+006 (5281961.000.000) 2024-06-09 18:10:58 Image size of job updated: 5753008
+	5619  -  MemoryUsage of job (MB)
+	5753008  -  ResidentSetSize of job (KB)
+...
+006 (5281961.000.000) 2024-06-09 18:15:58 Image size of job updated: 5754100
+	5620  -  MemoryUsage of job (MB)
+	5754100  -  ResidentSetSize of job (KB)
+...
+006 (5281961.000.000) 2024-06-09 18:20:58 Image size of job updated: 5754248
+	5620  -  MemoryUsage of job (MB)
+	5754248  -  ResidentSetSize of job (KB)
+...
+006 (5281961.000.000) 2024-06-09 18:31:00 Image size of job updated: 5754620
+	5620  -  MemoryUsage of job (MB)
+	5754620  -  ResidentSetSize of job (KB)
+...
+006 (5281961.000.000) 2024-06-09 18:36:00 Image size of job updated: 5754784
+	5620  -  MemoryUsage of job (MB)
+	5754784  -  ResidentSetSize of job (KB)
+...
+006 (5281961.000.000) 2024-06-09 18:46:01 Image size of job updated: 5755012
+	5621  -  MemoryUsage of job (MB)
+	5755012  -  ResidentSetSize of job (KB)
+...
+005 (5281961.000.000) 2024-06-09 18:51:22 Job terminated.
+	(1) Normal termination (return value 0)
+		Usr 0 00:45:12, Sys 0 00:00:19  -  Run Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Run Local Usage
+		Usr 0 00:45:12, Sys 0 00:00:19  -  Total Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Total Local Usage
+	0  -  Run Bytes Sent By Job
+	0  -  Run Bytes Received By Job
+	0  -  Total Bytes Sent By Job
+	0  -  Total Bytes Received By Job
+	Partitionable Resources :    Usage  Request Allocated Assigned
+	   Cpus                 :     1.00       32        32 
+	   Disk (KB)            :  7500     8388608   8389632 
+	   Gpus (Average)       :     0.42        1         1 "GPU-5cf19d22"
+	   GpusMemory (MB)      :  6765                       
+	   Memory (MB)          :  5621      262144    262144 
+	   TimeExecute (s)      :  2734                       
+	   TimeSlotBusy (s)     :  2734                       
+
+	Job terminated of its own accord at 2024-06-09T22:51:22Z with exit-code 0.
+...

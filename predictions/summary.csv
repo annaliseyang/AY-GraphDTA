@@ -1,0 +1,25 @@
+Data, Model Name, Compound Name, PubChem id, Predicted Affinity, Canonical SMILES, filename
+input, GINConvNet_davis, Abeta/tau aggregation-IN-3, 44814403, 3.5851097106933594, C1CN(CCN1C2=CC(=C(C=C2)[N+](=O)[O-])NC3=CC=CC=C3)C(=O)C4=CC=CC=C4, predictions/input_GINConvNet_davis_pred.csv
+input, GINConvNet_kiba, Curcumin, 969516, 12.634099006652832, COC1=C(C=CC(=C1)C=CC(=O)CC(=O)C=CC2=CC(=C(C=C2)O)OC)O, predictions/input_GINConvNet_kiba_pred.csv
+input, GATNet_davis, Curcumin, 969516, 7.8049468994140625, COC1=C(C=CC(=C1)C=CC(=O)CC(=O)C=CC2=CC(=C(C=C2)O)OC)O, predictions/input_GATNet_davis_pred.csv
+input, GATNet_kiba, 5,7-dichloro-2-[(dimethylamino)methyl]quinolin-8-ol, 10016012, 11.785971641540527, CN(C)CC1=NC2=C(C=C1)C(=CC(=C2O)Cl)Cl, predictions/input_GATNet_kiba_pred.csv
+input, GAT_GCN_davis, Abeta/tau aggregation-IN-3, 44814403, 4.5378289222717285, C1CN(CCN1C2=CC(=C(C=C2)[N+](=O)[O-])NC3=CC=CC=C3)C(=O)C4=CC=CC=C4, predictions/input_GAT_GCN_davis_pred.csv
+input, GAT_GCN_kiba, Tau-aggregation-IN-1, 163408861, 12.261308670043945, CCCN(CCN1CCN(CC1)C2=CC=C(C=C2)C3=CC(=C(C=C3)O)O)C4CCC5=C(C4)SC(=N5)N, predictions/input_GAT_GCN_kiba_pred.csv
+input, GCNNet_davis, Abeta/tau aggregation-IN-3, 44814403, 4.374788761138916, C1CN(CCN1C2=CC(=C(C=C2)[N+](=O)[O-])NC3=CC=CC=C3)C(=O)C4=CC=CC=C4, predictions/input_GCNNet_davis_pred.csv
+input, GCNNet_kiba, Tau-aggregation-IN-1, 163408861, 12.528925895690918, CCCN(CCN1CCN(CC1)C2=CC=C(C=C2)C3=CC(=C(C=C3)O)O)C4CCC5=C(C4)SC(=N5)N, predictions/input_GCNNet_kiba_pred.csv
+davis, GINConvNet_davis, Lestaurtinib, 126565, 4.705285549163818, CC12C(CC(O1)N3C4=CC=CC=C4C5=C6C(=C7C8=CC=CC=C8N2C7=C53)CNC6=O)(CO)O, predictions/davis_GINConvNet_davis_pred.csv
+davis, GINConvNet_kiba, Flavopiridol, 5287969, 12.791858673095703, CN1CCC(C(C1)O)C2=C(C=C(C3=C2OC(=CC3=O)C4=CC=CC=C4Cl)O)O, predictions/davis_GINConvNet_kiba_pred.csv
+davis, GATNet_davis, staurosporine, 44259, 8.32668685913086, CC12C(C(CC(O1)N3C4=CC=CC=C4C5=C6C(=C7C8=CC=CC=C8N2C7=C53)CNC6=O)NC)OC, predictions/davis_GATNet_davis_pred.csv
+davis, GATNet_kiba, A-674563, 11314340, 12.441452026367188, CC1=C2C=C(C=CC2=NN1)C3=CC(=CN=C3)OCC(CC4=CC=CC=C4)N, predictions/davis_GATNet_kiba_pred.csv
+davis, GAT_GCN_davis, staurosporine, 44259, 6.647208213806152, CC12C(C(CC(O1)N3C4=CC=CC=C4C5=C6C(=C7C8=CC=CC=C8N2C7=C53)CNC6=O)NC)OC, predictions/davis_GAT_GCN_davis_pred.csv
+davis, GAT_GCN_kiba, staurosporine, 44259, 13.356529235839844, CC12C(C(CC(O1)N3C4=CC=CC=C4C5=C6C(=C7C8=CC=CC=C8N2C7=C53)CNC6=O)NC)OC, predictions/davis_GAT_GCN_kiba_pred.csv
+davis, GCNNet_davis, (2E)-2-(4-amino-1-propan-2-yl-2H-pyrazolo[3,4-d]pyrimidin-3-ylidene)indol-5-ol, 25243800, 6.128018379211426, CC(C)N1C2=C(C(=C3C=C4C=C(C=CC4=N3)O)N1)C(=NC=N2)N, predictions/davis_GCNNet_davis_pred.csv
+davis, GCNNet_kiba, staurosporine, 44259, 13.542146682739258, CC12C(C(CC(O1)N3C4=CC=CC=C4C5=C6C(=C7C8=CC=CC=C8N2C7=C53)CNC6=O)NC)OC, predictions/davis_GCNNet_kiba_pred.csv
+kiba, GINConvNet_davis, CHEMBL409397, CHEMBL409397, 4.955451965332031, C1C2C(C3C(C(O2)OC(=O)C4=CC(=C(C(=C4)OC5=C(C(=C(C6=C5C(=O)OC7C(COC(=O)C8=CC(=C(C(=C86)O)O)O)OC(C9C7OC(=O)C2=CC(=C(C(=C2C2=C(C(=C(C=C2C(=O)O9)O)O)O)O)O)O)OC(=O)C2=CC(=C(C(=C2)OC2=C(C(=C(C4=C2C(=O)OC2C(COC(=O)C5=CC(=C(C(=C54)O)O)O)OC(C4C2OC(=O)C2=CC(=C(C(=C2C2=C(C(=C(C=C2C(=O)O4)O)O)O)O)O)O)OC(=O)C2=CC(=C(C(=C2)OC2=C(C(=C(C4=C2C(=O)OC2C(COC(=O)C5=CC(=C(C(=C54)O)O)O)OC(C4C2OC(=O)C2=CC(=C(C(=C2C2=C(C(=C(C=C2C(=O)O4)O)O)O)O)O)O)OC(=O)C2=CC(=C(C(=C2)O)O)O)O)O)O)O)O)O)O)O)O)O)O)O)O)O)O)OC(=O)C2=CC(=C(C(=C2C2=C(C(=C(C=C2C(=O)O3)O)O)O)O)O)O)OC(=O)C2=CC(=C(C(=C2C2=C(C(=C(C=C2C(=O)O1)O)O)O)O)O)O, predictions/kiba_GINConvNet_davis_pred.csv
+kiba, GINConvNet_kiba, CHEMBL291126, CHEMBL291126, 15.549246788024902, C1C(C2N3C4=CC=CC=C4C5=C6C(=C7C8=CC=CC=C8N(C1O2)C7=C53)C(=O)NC6=O)CO, predictions/kiba_GINConvNet_kiba_pred.csv
+kiba, GATNet_davis, CHEMBL1980995, CHEMBL1980995, 8.32668685913086, CC12C(C(CC(O1)N3C4=CC=CC=C4C5=C6C(=C7C8=CC=CC=C8N2C7=C53)CNC6=O)NC)OC, predictions/kiba_GATNet_davis_pred.csv
+kiba, GATNet_kiba, CHEMBL1974870, CHEMBL1974870, 13.342273712158203, CC1=C2C=C(C=CC2=NN1)C3=CC(=CN=C3)OCC(CC4=CC(=CC=C4)Cl)N, predictions/kiba_GATNet_kiba_pred.csv
+kiba, GAT_GCN_davis, CHEMBL1980995, CHEMBL1980995, 6.647208213806152, CC12C(C(CC(O1)N3C4=CC=CC=C4C5=C6C(=C7C8=CC=CC=C8N2C7=C53)CNC6=O)NC)OC, predictions/kiba_GAT_GCN_davis_pred.csv
+kiba, GAT_GCN_kiba, CHEMBL483525, CHEMBL483525, 14.820243835449219, CC1=CC(=CC2=C1C3=CC(=CC(=C3C(=O)O2)O)OS(=O)(=O)O)O, predictions/kiba_GAT_GCN_kiba_pred.csv
+kiba, GCNNet_davis, CHEMBL1980995, CHEMBL1980995, 5.877414703369141, CC12C(C(CC(O1)N3C4=CC=CC=C4C5=C6C(=C7C8=CC=CC=C8N2C7=C53)CNC6=O)NC)OC, predictions/kiba_GCNNet_davis_pred.csv
+kiba, GCNNet_kiba, CHEMBL519982, CHEMBL519982, 14.090692520141602, CC1=CC(=CC2=C1C3=CC(=CC(=C3C(=O)O2)O)O)O, predictions/kiba_GCNNet_kiba_pred.csv

@@ -6,6 +6,7 @@ from torch_geometric.data import InMemoryDataset
 from torch_geometric.loader import DataLoader
 from torch_geometric import data as DATA
 import torch
+import time
 
 class TestbedDataset(InMemoryDataset):
     def __init__(self, root='/tmp', dataset='davis',
@@ -21,7 +22,7 @@ class TestbedDataset(InMemoryDataset):
             self.data, self.slices = torch.load(self.processed_paths[0])
         else:
             print('Pre-processed data {} not found, doing pre-processing...'.format(self.processed_paths[0]))
-            self.process(xd, xt, y,smile_graph)
+            self.process(xd, xt, y, smile_graph)
             self.data, self.slices = torch.load(self.processed_paths[0])
 
     @property
@@ -49,7 +50,7 @@ class TestbedDataset(InMemoryDataset):
     # XD - list of SMILES, XT: list of encoded target (categorical or one-hot),
     # Y: list of labels (i.e. affinity)
     # Return: PyTorch-Geometric format processed data
-    def process(self, xd, xt, y,smile_graph):
+    def process(self, xd, xt, y, smile_graph):
         assert (len(xd) == len(xt) and len(xt) == len(y)), "The three lists must be the same length!"
         data_list = []
         data_len = len(xd)
@@ -82,15 +83,23 @@ class TestbedDataset(InMemoryDataset):
 def rmse(y,f):
     rmse = sqrt(((y - f)**2).mean(axis=0))
     return rmse
+
 def mse(y,f):
-    mse = ((y - f)**2).mean(axis=0)
+    mse = np.mean((y - f)**2, axis=0)
     return mse
+
+def mae(y,f):
+    mae = np.mean(np.abs(y - f), axis=0)
+    return mae
+
 def pearson(y,f):
     rp = np.corrcoef(y, f)[0,1]
     return rp
+
 def spearman(y,f):
     rs = stats.spearmanr(y, f)[0]
     return rs
+
 def ci(y,f):
     ind = np.argsort(y)
     y = y[ind]
@@ -112,4 +121,5 @@ def ci(y,f):
         i = i - 1
         j = i-1
     ci = S/z
+
     return ci

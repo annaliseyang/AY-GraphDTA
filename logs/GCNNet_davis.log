@@ -1,0 +1,45 @@
+000 (5281941.000.000) 2024-06-08 18:36:28 Job submitted from host: <155.37.253.48:9618?addrs=155.37.253.48-9618&alias=accesspoint.nmrbox.org&noUDP&sock=schedd_1883_28ec>
+...
+001 (5281941.000.000) 2024-06-08 18:36:48 Job executing on host: <155.37.253.81:9618?addrs=155.37.253.81-9618+[fde1-53ba-e9a0-de11-3d22-e957-7a43-2663]-9618&alias=compute-3.bmrb.io&noUDP&sock=startd_99378_9edd>
+	SlotName: slot1_1@compute-3.bmrb.io
+	AvailableGPUs = { GPUs_GPU_75d81a22 }
+	CondorScratchDir = "/var/lib/condor/execute/dir_87704"
+	Cpus = 40
+	Disk = 1073836
+	GPUs = 1
+	GPUs_GPU_75d81a22 = [ GlobalMemoryMb = 81090; MaxSupportedVersion = 12010; DriverVersion = 12.1; DeviceUuid = "75d81a22-43ac-4e5e-3c27-cd47be64fa24"; DeviceName = "NVIDIA H100 PCIe"; CoresPerCU = 128; ECCEnabled = true; ComputeUnits = 114; ClockMhz = 1755.0; Id = "GPU-75d81a22"; DevicePciBusId = "0000:25:00.0"; Capability = 9.0 ]
+	Memory = 262144
+...
+006 (5281941.000.000) 2024-06-08 18:36:56 Image size of job updated: 511020
+	500  -  MemoryUsage of job (MB)
+	511020  -  ResidentSetSize of job (KB)
+...
+006 (5281941.000.000) 2024-06-08 18:41:56 Image size of job updated: 8829896
+	8623  -  MemoryUsage of job (MB)
+	8829896  -  ResidentSetSize of job (KB)
+...
+006 (5281941.000.000) 2024-06-08 18:46:56 Image size of job updated: 8830956
+	8624  -  MemoryUsage of job (MB)
+	8830956  -  ResidentSetSize of job (KB)
+...
+005 (5281941.000.000) 2024-06-08 23:14:34 Job terminated.
+	(1) Normal termination (return value 0)
+		Usr 0 04:36:28, Sys 0 00:00:59  -  Run Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Run Local Usage
+		Usr 0 04:36:28, Sys 0 00:00:59  -  Total Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Total Local Usage
+	0  -  Run Bytes Sent By Job
+	0  -  Run Bytes Received By Job
+	0  -  Total Bytes Sent By Job
+	0  -  Total Bytes Received By Job
+	Partitionable Resources :    Usage  Request Allocated Assigned
+	   Cpus                 :     1.00       40        40 
+	   Disk (KB)            :  7500     1048576   1073836 
+	   Gpus (Average)       :     0.03        1         1 "GPU-75d81a22"
+	   GpusMemory (MB)      :  4323                       
+	   Memory (MB)          :  8624      262144    262144 
+	   TimeExecute (s)      : 16664                       
+	   TimeSlotBusy (s)     : 16666                       
+
+	Job terminated of its own accord at 2024-06-09T03:14:31Z with exit-code 0.
+...

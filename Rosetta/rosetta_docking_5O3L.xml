@@ -1,0 +1,46 @@
+<ROSETTASCRIPTS>
+  <SCOREFXNS>
+    <ScoreFunction name="fa_standard" weights="ref2015.wts"/>
+  </SCOREFXNS>
+  <RESIDUE_SELECTORS>
+    <Chain name="chX" chains="X"/>
+  </RESIDUE_SELECTORS>
+  <SIMPLE_METRICS>
+    <RMSDMetric name="rmsd_chX" residue_selector="chX" reference_name="store_native" residue_selector_ref="chX" robust="true" rmsd_type="rmsd_all" />
+  </SIMPLE_METRICS>
+  <SCORINGGRIDS ligand_chain="X" width="25">
+    <ClassicGrid grid_name="vdw" weight="1.0"/>
+  </SCORINGGRIDS>
+  <LIGAND_AREAS>
+    <LigandArea name="docking_sidechain_X" chain="X" cutoff="6.0" add_nbr_radius="true" all_atom_mode="true" minimize_ligand="10"/>
+    <LigandArea name="final_sidechain_X" chain="X" cutoff="6.0" add_nbr_radius="true" all_atom_mode="true"/>
+    <LigandArea name="final_backbone_X" chain="X" cutoff="7.0" add_nbr_radius="false" all_atom_mode="true" Calpha_restraints="0.3"/>
+  </LIGAND_AREAS>
+  <INTERFACE_BUILDERS>
+    <InterfaceBuilder name="side_chain_for_docking" ligand_areas="docking_sidechain_X"/>
+    <InterfaceBuilder name="side_chain_for_final" ligand_areas="final_sidechain_X"/>
+    <InterfaceBuilder name="backbone" ligand_areas="final_backbone_X" extension_window="3"/>
+  </INTERFACE_BUILDERS>
+  <MOVEMAP_BUILDERS>
+    <MoveMapBuilder name="docking" sc_interface="side_chain_for_docking" minimize_water="true"/>
+    <MoveMapBuilder name="final" sc_interface="side_chain_for_final" bb_interface="backbone" minimize_water="true"/>
+  </MOVEMAP_BUILDERS>
+  <MOVERS>
+    <SavePoseMover name="spm" restore_pose="0" reference_name="store_native"/>
+    <Transform name="transform" chain="X" box_size="20.0" move_distance="10" angle="360" initial_perturb="2" cycles="500" repeats="5" temperature="1000"/>
+    <HighResDocker name="high_res_docker" cycles="9" repack_every_Nth="3" scorefxn="fa_standard" movemap_builder="docking"/>
+    <FinalMinimizer name="final" scorefxn="fa_standard" movemap_builder="final"/>
+  </MOVERS>
+  <FILTERS>
+      <LigInterfaceEnergy name="interfE" scorefxn="fa_standard" energy_cutoff="0.0" confidence="0"/>
+      <SimpleMetricFilter name="rmsd_chX" metric="rmsd_chX" cutoff="999999." comparison_type="lt" confidence="0"/>
+  </FILTERS>
+  <PROTOCOLS>
+    <Add mover="spm"/>
+    <Add mover="transform"/>
+    <Add mover="high_res_docker"/>
+    <Add mover="final"/>
+    <Add filter="interfE"/>
+    <Add filter="rmsd_chX"/>
+  </PROTOCOLS>
+</ROSETTASCRIPTS>

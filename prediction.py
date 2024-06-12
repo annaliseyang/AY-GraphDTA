@@ -6,9 +6,15 @@ import Bio
 import os
 from create_data import *
 from utils import *
+
 from models.ginconv import GINConvNet
+from models.gat import GATNet
+from models.gat_gcn import GAT_GCN
+from models.gcn import GCNNet
+
 import requests
 import pubchempy as pcp
+import torch_scatter as ts
 
 
 def load_fasta(file):
@@ -184,7 +190,7 @@ def make_prediction(model, device, loader):
     return total_labels, total_preds.numpy().flatten()
 
 
-def save_as_csv(df, predictions, data: EvaluationDataset):
+def save_as_csv(df, predictions, data: EvaluationDataset, model_name="GINConvNet_davis"):
     exp, preds = predictions
     assert len(df) == len(preds), f"The number of predictions do not match the number of samples: {len(preds)} predictions vs. {len(df)} samples"
 
@@ -202,12 +208,14 @@ def save_as_csv(df, predictions, data: EvaluationDataset):
     print(new_df.nlargest(num_best_results, 'predicted_affinity'))
 
     best_result = new_df.loc[new_df['predicted_affinity'].idxmax()]
-    name, id = data.drugs.get(best_result['compound_iso_smiles'])
-    print(f"\nBest binding result:\tligand '{name}' ({'PubChem' if data.dataset == 'davis' else 'CHEMBL'} id: {id}) and target {target}")
-    print(f"Maximum predicted affinity = {np.max(preds)}")
+    compound_name, id = data.drugs.get(best_result['compound_iso_smiles'])
+    print(f"\nBest binding result:\tligand '{compound_name}' ({'PubChem' if data.dataset == 'davis' else 'CHEMBL'} id: {id}) and target {target}")
+    print(f"Maximum predicted affinity = {best_result['predicted_affinity']}")
     print(f"Average predicted affinity = {np.mean(preds)}")
+    with open('predictions/summary.csv', 'a') as f:
+        f.write(f"{data.dataset}, {model_name}, {str(compound_name)}, {id}, {best_result['predicted_affinity']}, {best_result['compound_iso_smiles']}, predictions/{data.dataset}_{model_name}_pred.csv\n")
 
-    filename = f'predictions/{data.dataset}_prediction.csv'
+    filename = f'predictions/{data.dataset}_{model_name}_pred.csv'
     print(f"\nPredictions saved to file: {filename}")
 
     new_df.to_csv(filename, index=False)
@@ -215,10 +223,25 @@ def save_as_csv(df, predictions, data: EvaluationDataset):
     return new_df
 
 
+def create_empty_model_instance(model_name):
+    match model_name:
+        case 'GINConvNet':
+            return GINConvNet()
+        case 'GATNet':
+            return GATNet()
+        case 'GAT_GCN':
+            return GAT_GCN()
+        case 'GCNNet':
+            return GCNNet()
+        case _:
+            raise ValueError(f"Model '{model_name}' not found")
+
+
+
 if __name__ == '__main__':
     # Create the input data (ligands and target sequence)
     # dictionaries mapping SMILES to PubChem ID and drug name
-    drugs = {
+    ligands = {
         'CN(C)C1=CC2=C(C=C1)N=C3C=CC(=[N+](C)C)C=C3S2.[Cl-]': ('methylene blue', '6099'),
         'COC1=C(C=CC(=C1)C=CC(=O)CC(=O)C=CC2=CC(=C(C=C2)O)OC)O': ('Curcumin', '969516'),
         'CN1CCC23C=CC(CC2OC4=C(C=CC(=C34)C1)OC)O.Br': ('Galantamine Hydrobromide', '121587'),
@@ -227,47 +250,60 @@ if __name__ == '__main__':
         'C1CN(CCN1C2=CC(=C(C=C2)[N+](=O)[O-])NC3=CC=CC=C3)C(=O)C4=CC=CC=C4': ('Abeta/tau aggregation-IN-3', '44814403'),
     }
 
-    control = {
-        'CC(=O)OC1=CC=CC=C1C(=O)O': ('Aspirin', '2244'),
-        'C(C1C(C(C(C(O1)O)O)O)O)O': ('D-Glucose', '5793'),
-    }
+    # control = {
+    #     'CC(=O)OC1=CC=CC=C1C(=O)O': ('Aspirin', '2244'),
+    #     'C(C1C(C(C(C(O1)O)O)O)O)O': ('D-Glucose', '5793'),
+    # }
 
     all_davis = get_ligands_from('davis')
     all_kiba = get_ligands_from('kiba')
 
-    datasets = {
-        'input': drugs,
-        'control': control,
+    input_datasets = {
+        'input': ligands,
+        # 'control': control,
         'davis': all_davis,
         'kiba': all_kiba,
     }
 
     # Load target sequence
+
     target = '5O3L' # tau protein paired helical filament in Alzheimer's disease brain
     target_sequence = Bio.SeqIO.read(f'data/test_targets/rcsb_pdb_{target}.fasta', 'fasta').seq
     print(f"\n{target} sequence: {target_sequence}")
 
+    # target = '3IW4'
+    # target_sequence = 'MPSEDRKQPSNNLDRVKLTDFNFLMVLGKGSFGKVMLADRKGTEELYAIKILKKDVVIQDDDVECTMVEKRVLALLDKPPFLTQLHSCFQTVDRLYFVMEYVNGGDLMYHIQQVGKFKEPQAVFYAAEISIGLFFLHKRGIIYRDLKLDNVMLDSEGHIKIADFGMCKEHMMDGVTTREFCGTPDYIAPEIIAYQPYGKSVDWWAYGVLLYEMLAGQPPFDGEDEDELFQSIMEHNVSYPKSLSKEAVSICKGLMTKHPAKRLGCGPEGERDVREHAFFRRIDWEKLENREIQPPFKPKVCGKGAENFDKFFTRGQPVLTPPDQLVIANIDQSDFEGFSYVNPQFVHPILQSAVHHHHHH'
+
+    # make a new csv file with the summary
+    with open('predictions/summary.csv', 'w') as f:
+        f.write('Data, Model Name, Compound Name, PubChem id, Predicted Affinity, Canonical SMILES, filename\n')
+
     # Process and save each dataset, then predict binding affinities for each drug-target pair
-    for dataset, drugs in datasets.items():
+    for input_data, ligands in input_datasets.items():
         print(f"------------------------------------------------------------")
-        df = create_data(drugs, target_sequence, dataset)
-        drugs, prots = list(df['compound_iso_smiles']), list(df['target_sequence'])
+        df = create_data(ligands, target_sequence, input_data)
+        ligands, prots = list(df['compound_iso_smiles']), list(df['target_sequence'])
 
         smile_graph = {}
-        for smile in drugs:
+        for smile in ligands:
             g = smile_to_graph(smile)
             smile_graph[smile] = g
 
         # Preprocess the data
-        drugs, prots = preprocess_data(df, dataset, multi_target=False)
-        processed_data = EvaluationDataset(root='data', dataset=dataset, drugs=datasets[dataset], prots=prots, xd=drugs, xt=prots, smile_graph=smile_graph)
+        ligands, prots = preprocess_data(df, input_data, multi_target=False)
+        processed_data = EvaluationDataset(root='data', dataset=input_data, drugs=input_datasets[input_data], prots=prots, xd=ligands, xt=prots, smile_graph=smile_graph)
 
-        # Prepare model
-        model_state_dict = torch.load('model_GINConvNet_davis.model', map_location='cpu')
-        model = GINConvNet() # Create a new model instance
-        model.load_state_dict(model_state_dict)
+        # Load each of the 8 models and make predictions on the input dataset
+        for model_name in ['GINConvNet', 'GATNet', 'GAT_GCN', 'GCNNet']:
+            for training_dataset in ['davis', 'kiba']:
+                print(f"\nPredicting binding affinities for dataset '{input_data}' using model '{model_name}' trained on {training_dataset}...")
 
-        # Make predictions
-        loader = DataLoader(processed_data, batch_size=1, shuffle=False)
-        pred = make_prediction(model, 'cpu', loader)
-        save_as_csv(df, pred, processed_data)
+                # Prepare models
+                model_state_dict = torch.load(f'training_results/model_{model_name}_{training_dataset}.model', map_location='cpu')
+                model = create_empty_model_instance(model_name)
+                model.load_state_dict(model_state_dict)
+
+                # Make predictions
+                loader = DataLoader(processed_data, batch_size=1, shuffle=False)
+                pred = make_prediction(model, 'cpu', loader)
+                save_as_csv(df, pred, processed_data, model_name = model_name + '_' + training_dataset)

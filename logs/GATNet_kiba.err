@@ -1,0 +1,4 @@
+/home/nmrbox/0050/anyang/.local/lib/python3.8/site-packages/torch_geometric/typing.py:72: UserWarning: An issue occurred while importing 'torch-scatter'. Disabling its usage. Stacktrace: /home/nmrbox/0050/anyang/.local/lib/python3.8/site-packages/torch_scatter/_version_cuda.so: undefined symbol: _ZN3c1017RegisterOperatorsD1Ev
+  warnings.warn(f"An issue occurred while importing 'torch-scatter'. "
+/home/nmrbox/0050/anyang/.local/lib/python3.8/site-packages/torch_geometric/warnings.py:11: UserWarning: The usage of `scatter(reduce='max')` can be accelerated via the 'torch-scatter' package, but it was not found
+  warnings.warn(message)

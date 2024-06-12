@@ -1,0 +1,13 @@
+executable = /usr/bin/python3 
+arguments = /home/nmrbox/0050/anyang/AnnaYang/python_projects/AY-GraphDTA/training.py 0 0 0
+
+log = logs/GINConvNet_davis.log
+output = logs/GINConvNet_davis.out
+error = logs/GINConvNet_davis.err
+getenv=True
+request_cpus = 32
+request_gpus = 1
+request_disk = 64G
+request_memory = 128G
+
+queue
