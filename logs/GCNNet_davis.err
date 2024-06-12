@@ -1,2 +1,0 @@
-/home/nmrbox/0050/anyang/.local/lib/python3.8/site-packages/torch_geometric/warnings.py:11: UserWarning: The usage of `scatter(reduce='max')` can be accelerated via the 'torch-scatter' package, but it was not found
-  warnings.warn(message)
