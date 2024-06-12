@@ -23,7 +23,7 @@ def train(model, device, train_loader, optimizer, epoch):
         optimizer.step()
         if batch_idx % LOG_INTERVAL == 0:
             print('Train epoch: {} [{}/{} ({:.0f}%)]\tLoss: {:.6f}'.format(epoch,
-                                                                           batch_idx * len(data.x),
+                                                                           batch_idx * len(data),
                                                                            len(train_loader.dataset),
                                                                            100. * batch_idx / len(train_loader),
                                                                            loss.item()))
@@ -42,7 +42,7 @@ def predicting(model, device, loader):
     return total_labels.numpy().flatten(),total_preds.numpy().flatten()
 
 
-datasets = [['davis','kiba'][int(sys.argv[1])]] 
+datasets = [['davis','kiba'][int(sys.argv[1])]]
 modeling = [GINConvNet, GATNet, GAT_GCN, GCNNet][int(sys.argv[2])]
 model_st = modeling.__name__
 
@@ -70,13 +70,13 @@ for dataset in datasets:
     else:
         train_data = TestbedDataset(root='data', dataset=dataset+'_train')
         test_data = TestbedDataset(root='data', dataset=dataset+'_test')
-        
-        
+
+
         train_size = int(0.8 * len(train_data))
         valid_size = len(train_data) - train_size
-        train_data, valid_data = torch.utils.data.random_split(train_data, [train_size, valid_size])        
-        
-        
+        train_data, valid_data = torch.utils.data.random_split(train_data, [train_size, valid_size])
+
+
         # make data PyTorch mini-batch processing ready
         train_loader = DataLoader(train_data, batch_size=TRAIN_BATCH_SIZE, shuffle=True)
         valid_loader = DataLoader(valid_data, batch_size=TEST_BATCH_SIZE, shuffle=False)
@@ -112,4 +112,3 @@ for dataset in datasets:
                 print('rmse improved at epoch ', best_epoch, '; best_test_mse,best_test_ci:', best_test_mse,best_test_ci,model_st,dataset)
             else:
                 print(ret[1],'No improvement since epoch ', best_epoch, '; best_test_mse,best_test_ci:', best_test_mse,best_test_ci,model_st,dataset)
-

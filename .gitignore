@@ -9,3 +9,6 @@ data/processed/kiba_train.pt
 filter_data.py
 supplement.pdf
 data/kiba/uniprot_data
+logs
+Rosetta
+submit

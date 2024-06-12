@@ -57,10 +57,9 @@ def train_test_split(df, test_split=0.2):
     """
     Split the dataset into training and testing sets
     """
-    generator = torch.Generator().manual_seed(42)
     test_size = int(test_split * len(df))
     train_size = len(df) - test_size
-    train_set, test_set = random_split(df, [train_size, test_size], generator=generator)
+    train_set, test_set = random_split(df, [train_size, test_size])
 
     train_df = df.iloc[train_set.indices]
     test_df = df.iloc[test_set.indices]
@@ -172,46 +171,42 @@ amyloid_sequences = {
 }
 
 def process_amyloid_data():
+    if os.path.exists('data/processed/amyloid_train.pt') and os.path.exists('data/processed/amyloid_test.pt'):
+        print(f"Processed data for 'amyloid' already exists")
+        return
+
     # Load data
     df = pd.read_csv('data/amyloids/amyloid_data.csv')
-    print(df.head())
-
     # Reduce the dataset to only the columns SMILES, Target fibril, and log(Kd/M)
     smiles = list(df['SMILES'])
-    # # list all the unique values in the "target fibril" column
-    # targets = list(df['Target fibril'].unique())
-    # print(targets)
-
     sequences = [amyloid_sequences.get(p, amyloid_sequences['Ab40']) for p in df['Target fibril']]
-
     new_df = pd.DataFrame({'smiles': smiles, 'sequence': sequences, 'log(Kd/M)': list(df['log(Kd/M)'])})
     new_df = new_df.dropna()
 
-    # if not os.path.exists(f'data/amyloid_train.csv') or not os.path.exists(f'data/amyloid_test.csv'):
-    # Split data into train and test sets
-    train_df, test_df = train_test_split(new_df, test_split=0.2)
+    if not os.path.exists(f'data/amyloid_train.csv') or not os.path.exists(f'data/amyloid_test.csv'):
+        # Split data into train and test sets
+        train_df, test_df = train_test_split(new_df, test_split=0.2)
 
-    train_df.to_csv('data/amyloid_train.csv', index=False)
-    test_df.to_csv('data/amyloid_test.csv', index=False)
+        train_df.to_csv('data/amyloid_train.csv', index=False)
+        test_df.to_csv('data/amyloid_test.csv', index=False)
 
     smile_graph = {
         smile: smile_to_graph(smile) for smile in smiles
     }
     for opt in ['train', 'test']:
         df = pd.read_csv('data/amyloid_' + opt + '.csv')
-        print(df.head())
 
         drugs = np.asarray(df['smiles'])
         prots = np.asarray([seq_cat(s) for s in df['sequence']])
         Y = np.asarray([-float(n) for n in df['log(Kd/M)']])
 
         # make data PyTorch Geometric ready
-        print(f'preparing amyloid_{opt}.pt in pytorch format!')
+        print(f'\npreparing amyloid_{opt}.pt in pytorch format!')
         data = TestbedDataset(root='data', dataset=f'amyloid_{opt}', xd=drugs, xt=prots, y=Y, smile_graph=smile_graph)
         print(f'processed/amyloid_{opt}.pt has been created')
 
 
 
 if __name__ == '__main__':
-    # process_deepDTA_data()
+    process_deepDTA_data()
     process_amyloid_data()
